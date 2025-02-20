@@ -5,7 +5,7 @@ My recreation of the popular game Bandle! Built using TypeScript, React, Python 
 
 ## How to access
 You can either run the application locally or access the hosted version online:
-* Hosted Version: (To be deployed)
+* Hosted Version: https://bandle-game.vercel.app/
 
 ## Installation Instructions (For Local Setup)
 
