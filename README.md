@@ -19,7 +19,7 @@ npm run dev
 Open your browser and go to http://localhost:5173/
 
 ## GamePlay Demo
-![](https://github.com/glebezh/AI-Powered-Fitness-Trainer/blob/main/BicepCurlDemo.gif)
+![](https://github.com/glebezh/Bandle-Game/blob/main/WinDemo.mp4)
 
 ## Current future plans
 - Website deployment
