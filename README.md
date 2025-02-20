@@ -20,10 +20,10 @@ Open your browser and go to http://localhost:5173/
 
 ## GamePlay Demo
 
-# Winning the Game
+### Winning the Game
 https://github.com/user-attachments/assets/1a2c5663-78d3-4d30-8619-f2a01d3bb949
 
-# Losing the Game
+### Losing the Game
 https://github.com/user-attachments/assets/b383fab5-9e6b-43b4-8731-72c66c4bdb2c
 
 
