@@ -1,6 +1,7 @@
 # Bandle-Game
 
-My recreation of the popular game Bandle! Built using TypeScript, React, Python FastApi and the Demucs Audio Separation model for track separation.
+My recreation of the popular game Bandle! Built using TypeScript, React, Python FastAPI and the Demucs Music Source Separation AI Model.
+
 
 ## How to access
 You can either run the application locally or access the hosted version online:
