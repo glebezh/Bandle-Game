@@ -1,7 +1,7 @@
  // YOUTUBE API CODE
   // useEffect(() => {
   //   async function getYouTubeSongData(chosenSong: string) {
-  //     const apiKey = "AIzaSyARmF6sjkuuzq9Z2LA5KsZwK76R72Ci1ws";
+  //     const apiKey ="";
   //     const searchQuery = `espresso official music video`;
   //     const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(searchQuery)}&type=video&key=${apiKey}`;
       
