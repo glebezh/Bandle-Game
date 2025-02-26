@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import Select from "react-select";
+import Select, { StylesConfig} from "react-select";
+
 import '../public/songs.txt';
 
 // Currently available songs (potentially make this a database)
-const directories = ["/levitating", "/espresso", "/blinding lights"];
+const directories = ["/levitating", "/espresso", "/blinding lights", "/billie jean", "/shape of you", "/not like us", "/houdini"];
 const files = ["/drums.mp3", "/bass.mp3", "/guitar.mp3", "/other.mp3", "/vocals.mp3"];
 
 const Bandle: React.FC = () => {
@@ -39,8 +40,26 @@ const Bandle: React.FC = () => {
   const [isDisabled, setIsDisabled] = useState<boolean[]>(
     Array(components.length).fill(true).map((_, index) => index === 0 ? false : true)
   );
+ // const [winCount, setwinCount] = useState<number>(0);
+  const [showInstructions, setShowInstructions] = useState<boolean>(false);
+  const [isDark, setIsDark] = useState(
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  );
   const selectRef = useRef<any>(null);
+  const [showHighScores, setHighScores] = useState<boolean>(false);
   let [gamestate, setGameState] = useState<string>("");
+  
+  let winVar = localStorage.getItem("Win");
+  let lossVar = localStorage.getItem("Loss");
+  if (winVar === null){
+    winVar = "0";
+  }
+  localStorage.setItem("Win", winVar);
+  if (lossVar === null){
+    lossVar = "0";
+  }
+  localStorage.setItem("Loss", lossVar);
+
 
   // Optional for youtube API integration
   // const [releaseDate, setReleaseDate] = useState<number>();
@@ -71,6 +90,7 @@ const Bandle: React.FC = () => {
       audio.currentTime = 0;
     }
   }
+  
   // Function to compare user input to actual input
   const compareInput = (event: React.FormEvent, index: number) => {
     // Prevent button from refreshing page
@@ -85,6 +105,18 @@ const Bandle: React.FC = () => {
       statevar[activeIndex] = "✅";
       setGuessState(statevar);
       setKeepPlaying(false);
+      let winNum = localStorage.getItem("Win");
+      if (winNum === null) {
+        winNum = "0";
+      } 
+      else {
+        winNum = (Number(winNum) + 1).toString(); 
+      }
+      localStorage.setItem("Win", winNum);
+
+      // // localStorage.Win = String(Number(localStorage.Win) + Number(1));
+      // setwinCount(winCount => winCount+1);
+
     }
     else if (selectedDirectory2 !== selectedDirectory && index === files.length - 1 && gamestate !== "You Won!") {
       // alert(`Incorrect! '${selectedDirectory2}'.'${chosenSong}'`);
@@ -93,6 +125,14 @@ const Bandle: React.FC = () => {
       statevar[activeIndex] = "❌";
       setGuessState(statevar);
       setKeepPlaying(false);
+      let lossNum = localStorage.getItem("Loss");
+      if (lossNum === null) {
+        lossNum = "0";
+      } 
+      else {
+        lossNum = (Number(lossNum) + 1).toString(); 
+      }
+      localStorage.setItem("Loss", lossNum);
     }
     else if (selectedDirectory2 !== selectedDirectory) {
       // alert(`Incorrect! '${selectedDirectory2}'.'${chosenSong}'`);
@@ -177,12 +217,91 @@ const Bandle: React.FC = () => {
     // };
   }, []);
 
+  // Detect system dark mode changes
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const listener = (e: MediaQueryListEvent) => setIsDark(e.matches);
+    mediaQuery.addEventListener("change", listener);
+    return () => mediaQuery.removeEventListener("change", listener);
+  }, []);
+
+  const customStyles: StylesConfig<{ value: string; label: string }, false> = {
+    control: (provided) => ({
+      ...provided,
+      width: "300px",
+      backgroundColor: isDark ? "#222" : "white",
+      color: isDark ? "white" : "black",
+      borderColor: isDark ? "#444" : "#ccc",
+    }),
+    menu: (provided) => ({
+      ...provided,
+      backgroundColor: isDark ? "#222" : "white",
+    }),
+    option: (provided, { isFocused }) => ({
+      ...provided,
+      backgroundColor: isFocused ? (isDark ? "#444" : "#eee") : isDark ? "#222" : "white",
+      color: isDark ? "white" : "black",
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      color: isDark ? "white" : "black",
+    }),
+    input: (provided) => ({
+      ...provided,
+      color: isDark ? "white" : "black", 
+    }),
+  };
+
   return (
     <div>
       <div>
         <h1 style={{ fontSize: "40px" }}><center>🥁 Bandle 🎸</center></h1>
-        <hr style={{ marginBottom: "20px" }}></hr>
-        <h3> Guess the Song!</h3>
+        <hr style={{ marginBottom: "15px" }}></hr>
+        <div style = {{border: "0"}} className="song-component">
+        <h3> Guess the Song!<button style={{right: "0px", borderRadius: "50%", paddingLeft: "8px", paddingRight: "8px"}} className="right-content" onClick={() => setShowInstructions(true)}>
+          <i style={{alignItems: "right"}} className="fa fa-question"></i>
+          </button>
+          
+        </h3>
+        </div>
+        {/* <div>Wins: {winVar}  Losses: {lossVar}</div> */}
+
+        {showHighScores && (
+        <div style = {{alignContent: "center", textAlign: "center"}}className="modal-overlay" onClick={() => setHighScores(false)}>
+          <div style = {{color: isDark ? "white" : "black", background: isDark ? "#222" : "white", alignContent: "center" }} className="modal-box" onClick={(e) => e.stopPropagation()}>
+            <h2 style = {{color: isDark ? "white" : "black"}}>My Scores</h2>
+            <h3 style = {{color: "green"}}>Wins: {winVar}</h3>
+            <h3 style = {{color: "red"}}>Losses: {lossVar}</h3>
+            {/* <button onClick={() => setHighScores(false)} className="close">&times; </button> */}
+
+            <button className="play-pause-button" onClick={() => setHighScores(false)}>Ok!</button>
+          </div> 
+        </div>
+        )}
+      
+
+        {showInstructions && (
+        <div className="modal-overlay" onClick={() => setShowInstructions(false)}>
+          <div style = {{color: isDark ? "white" : "black", background: isDark ? "#222" : "white", }} className="modal-box" onClick={(e) => e.stopPropagation()}>
+            <h2 style = {{color: isDark ? "white" : "black"}}>Welcome to Bandle!</h2>
+            
+            <p style={{margin: "30px"}}>Guess the correct song by listening to different instrument tracks 🎵</p>
+            <ul>
+              <li>The game randomly selects a song, but you won’t know which one.</li>
+              <li>The first round starts with just the drums playing.</li>
+              <li>With each incorrect guess, a new instrument is added.</li>
+              <li>After listening, type your guess in the search box and submit it.</li>
+              <li>If your guess is correct, you win! 🎉</li>
+              <li>If you reach the final round and still guess incorrectly, game over!</li>
+            </ul>
+            <div style={{textAlign:"center", marginTop: "30px", marginBottom: "30px"}}>
+            <button className = "play-pause-button" onClick={() => setShowInstructions(false)}>Lets play!</button>
+              </div> 
+          </div>
+        </div>
+        )}
+
+        
       </div>
       <div className="components-container">
         {components.map((comp, index) => (
@@ -207,19 +326,14 @@ const Bandle: React.FC = () => {
       {!gamestate && (
         <div className="submission-div">
           <form className="form_class" onSubmit={(event) => compareInput(event, activeIndex)}>
-            <Select
+            <Select className = "select_box"
               ref={selectRef}
               options={songs.map((song) => {
                 const actualSongName = song;
                 const songName = song.split("-")[0].trim().toLowerCase();
                 return { value: songName, label: actualSongName };
               })}
-              styles={{
-                control: (provided) => ({
-                  ...provided,
-                  width: "300px",
-                }),
-              }}
+              styles={customStyles}
               isDisabled={!keepPlaying}
               onChange={(selectedOption) => {
                 setSelectedDirectory(selectedOption?.value || "");
@@ -251,7 +365,7 @@ const Bandle: React.FC = () => {
           <button className="play-again-high-score" disabled={keepPlaying} onClick={() => window.location.reload()}>
             <h4>Play Again</h4>
           </button>
-          <button className="play-again-high-score" disabled={keepPlaying} onClick={() => window.location.reload()}>
+          <button className="play-again-high-score" disabled={keepPlaying} onClick={() => setHighScores(true)}>
             <h4>High Scores</h4>
             {/* // Implement high score backend tracking */}
           </button>

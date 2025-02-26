@@ -87,3 +87,31 @@
       {/* <h4><center>Difficulty</center></h4>
       <h4><center>Release Year</center></h4> */}
       {/* <h2><center>Number of Guesses: {guesses}</center></h2> */}
+
+
+      fetch("https://www.linkedin.com/voyager/api/graphql?action=execute&queryId=voyagerIdentityDashProfileEditFormPages.f1e638355eccbf2eef390ececec21df6", {
+        "headers": {
+          "accept": "application/vnd.linkedin.normalized+json+2.1",
+          "accept-language": "en-US,en;q=0.9,ru;q=0.8",
+          "content-type": "application/json; charset=UTF-8",
+          "csrf-token": "ajax:2276672465561265929",
+          "priority": "u=1, i",
+          "sec-ch-ua": "\"Not A(Brand\";v=\"8\", \"Chromium\";v=\"132\", \"Google Chrome\";v=\"132\"",
+          "sec-ch-ua-mobile": "?1",
+          "sec-ch-ua-platform": "\"Android\"",
+          "sec-fetch-dest": "empty",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-site": "same-origin",
+          "x-li-lang": "en_US",
+          "x-li-page-instance": "urn:li:page:d_flagship3_profile_self_edit_project;SajrzHziQv2pUhL6OG9Hsg==",
+          "x-li-pem-metadata": "Voyager - Profile - AddEdit=project-profile-edit-form-post",
+          "x-li-track": "{\"clientVersion\":\"1.13.30865\",\"mpVersion\":\"1.13.30865\",\"osName\":\"web\",\"timezoneOffset\":10.5,\"timezone\":\"Australia/Adelaide\",\"deviceFormFactor\":\"DESKTOP\",\"mpName\":\"voyager-web\",\"displayDensity\":1.75,\"displayWidth\":2240,\"displayHeight\":1401.75}",
+          "x-restli-protocol-version": "2.0.0"
+        },
+        "referrer": "https://www.linkedin.com/in/glebe-zhivoglyadov/details/projects/edit/forms/609438564/?profileFormEntryPoint=PROFILE_SECTION",
+        "referrerPolicy": "strict-origin-when-cross-origin",
+        "body": "{\"variables\":{\"formElementInputs\":[{\"formElementUrn\":\"urn:li:fsd_profileEditFormElement:(PROJECT,urn:li:fsd_profileProject:(ACoAAEAyC98BaNjyHk-uFZ4lb2aD873AkLJFrok,609438564),/url)\",\"formElementInputValues\":[{\"textInputValue\":\"https://github.com/glebezh/Bandle-Game\"}]}],\"trackingId\":\"Î\\u0012D{èBæí\\u0012ö%\\u0019|\",\"initialFlowEntryPoint\":\"PROFILE_SECTION\"},\"queryId\":\"voyagerIdentityDashProfileEditFormPages.f1e638355eccbf2eef390ececec21df6\"}",
+        "method": "POST",
+        "mode": "cors",
+        "credentials": "include"
+      });
