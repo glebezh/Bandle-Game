@@ -49,24 +49,32 @@ h4{
 
 button, input{
   border-radius: 4px;
-  border: 1px solid #ccc;
+  border: 2px solid green;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: all 0.2s ease-in-out;
+
 }
 
-button:hover, input:hover, select:hover {
-  border-color: #646cff;
+button:hover, input:hover {
+  background: #4caf50; 
+  color: white;
+  border-color: #388e3c;
 }
-button:focus,
+
+button:active, input:active {
+  transform: scale(0.92);
+}
+
+/*  */
+/* button:focus,
 button:focus-visible, input:focus,
 input:focus-visible, select:focus,
 select:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
+  outline: 4px auto green;
+} */
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -82,13 +90,13 @@ select:focus-visible {
 }
 
 .play-pause-button{
-  padding: 0.4em 1.0em;
   margin-top: 11px;
-  margin-bottom: 10px;
-  padding-right: 17.5px;
-  padding-left: 17.5px; 
-  padding-top: 7.5px;
-  padding-bottom: 7.5px;
+  margin-bottom: 5px;
+  padding-right: 15px;
+  padding-left: 15px; 
+  padding-top: 6.5px;
+  padding-bottom: 6.5px;
+  transition: transform 0.2s ease;
 }
 
 .play-again-high-score{
@@ -105,10 +113,33 @@ input, select {
   margin-bottom: 10px;
 }
 
-progress{
-  margin-right: 10px;
-  height: 30px;
-  
+progress {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 80%;
+  height: 15px;
+  border-radius: 10px;
+  margin-right: 14px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+progress::-webkit-progress-bar {
+  background-color: #f7f5f5;
+  /* background-color: black; */
+  border-radius: 10px;
+}
+
+progress::-webkit-progress-value {
+  background: linear-gradient(90deg, #367be9, #2049ef); /* Gradient fill */
+  border-radius: 10px;
+  /* transition: width 0.3s ease-in-out; */
+}
+
+progress::-moz-progress-bar {
+  background: linear-gradient(90deg, #367be9, #2049ef); /* Gradient fill */
+  border-radius: 10px;
+  /* transition: width 0.3s ease-in-out; */
 }
 
 p{
@@ -123,7 +154,7 @@ p{
   width: 100%;
   justify-content: center;
   align-items: center;
-  min-width: 387px;
+  min-width: 420px;
   padding: 3px;
   padding-bottom: 1px;
   border: 1px solid #ccc;
@@ -146,11 +177,14 @@ p{
 
 .play-pause-progress{
   display: flex;
-  flex-wrap: wrap; 
+  /* flex-wrap: wrap;  */
   gap: 5px;
   padding-bottom: 7px;
   justify-content: center;
-  padding-top: 7px;
+  padding-top: 5px;
+  align-items: center;
+  text-align: center;
+
 }
 
 .submission-div{
@@ -163,6 +197,7 @@ p{
 
 .form_class{
   display: flex;
+  min-width: 420px;
 }
 
 .components-container {
@@ -172,11 +207,10 @@ p{
 }
 
 .submit-button{
-  padding-bottom: 7px;
-  padding-top: 8px;
-  border-style: 1px black;
+  padding-top: 7px;
   margin-left: 7px;
 }
+
 
 .result-div{
   text-align: center;
@@ -201,16 +235,16 @@ p{
 }
 
 .modal-overlay {
-  position: fixed;  /* Ensures the modal stays in place */
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;  /* Cover the whole viewport */
+  width: 100vw;
   height: 100vh; 
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background */
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Ensures it's above other elements */
+  z-index: 1000;
   
 }
 
@@ -233,8 +267,8 @@ p{
     align-items: center;
   }
 
-  position: relative; /* Keeps it positioned inside the overlay */
-  z-index: 1001; /* Ensures it's above the overlay */
+  position: relative; 
+  z-index: 1001;
 }
 
 /* .modal-box button {
@@ -260,3 +294,5 @@ p{
   font-size: 28px;
   font-weight: bold;
 }
+
+

@@ -4,7 +4,7 @@ import Select, { StylesConfig} from "react-select";
 import '../public/songs.txt';
 
 // Currently available songs (potentially make this a database)
-const directories = ["/levitating", "/espresso", "/blinding lights", "/billie jean", "/shape of you", "/not like us", "/houdini"];
+const directories = ["/levitating", "/espresso", "/blinding lights", "/billie jean", "/shape of you", "/houdini"];
 const files = ["/drums.mp3", "/bass.mp3", "/guitar.mp3", "/other.mp3", "/vocals.mp3"];
 
 const Bandle: React.FC = () => {
@@ -193,7 +193,7 @@ const Bandle: React.FC = () => {
   useEffect(() => {
     setInterval(() => {
       setProgress(audioInstances.map((audio) => audio.currentTime));
-    }, 1000);
+    }, 1);
     // Optional cleanup
     // return () => clearInterval(interval);
   }, []);
@@ -228,10 +228,11 @@ const Bandle: React.FC = () => {
   const customStyles: StylesConfig<{ value: string; label: string }, false> = {
     control: (provided) => ({
       ...provided,
-      width: "300px",
+      width: "330px",
       backgroundColor: isDark ? "#222" : "white",
       color: isDark ? "white" : "black",
       borderColor: isDark ? "#444" : "#ccc",
+      borderRadius: "4px",
     }),
     menu: (provided) => ({
       ...provided,
@@ -313,14 +314,20 @@ const Bandle: React.FC = () => {
       </div>
       {(gamestate === "") && (
         <div className="play-pause-progress">
-          <progress style={{ marginTop: "14px" }} value={progress[activeIndex]} max={durations[activeIndex] || 1}></progress>
-          <p style={{ paddingTop: "17px" }}><b>{formatTime(progress[activeIndex])} / {formatTime(durations[activeIndex])}</b> </p>
-          <button style={{ marginLeft: "10px" }} className="play-pause-button" disabled={!keepPlaying} onClick={() => playPause(activeIndex)}>
+          {/* <progress style={{ marginTop: "14px", width: "110%"}} value={progress[activeIndex]} max={durations[activeIndex] || 1}></progress> */}
+          {/* <p style={{ paddingTop: "17px" }}><b>{formatTime(progress[activeIndex])} / {formatTime(durations[activeIndex])}</b> </p> */}
+          <button style = {{marginRight: "10px"}} className="play-pause-button" disabled={!keepPlaying} onClick={() => playPause(activeIndex)}>
             {isPlaying[activeIndex] ? <i className="fa fa-pause"></i> : <i className="fa fa-play"></i>}
           </button>
+          <progress style={{width: "80%", marginRight: "14px", marginTop: "6px", backgroundColor: isDark ? "#323332":  "#f7f5f5"}} value={progress[activeIndex]} max={durations[activeIndex] || 1}></progress>
+          
           <button className="play-pause-button" disabled={!keepPlaying} onClick={() => restartSong(activeIndex)}>
             <i className="fa fa-refresh"></i>
           </button>
+          {/* <button className="play-pause-button" disabled={!keepPlaying} onClick={() => restartSong(activeIndex)}>
+            <p>Skip</p>
+          </button>  */}
+          
         </div>
       )}
       {!gamestate && (
@@ -340,13 +347,13 @@ const Bandle: React.FC = () => {
               }}
               placeholder="Search for a song..."
               menuPlacement="top"
-              maxMenuHeight={200}
+              maxMenuHeight={300}
               inputValue={inputValue || ""}
               onInputChange={(value) => { { setInputValue(value || ""); } }}
               required
-              noOptionsMessage={() => "Keep Typing!"}
+              noOptionsMessage={() => "Uh-oh! Song not found!"}
               filterOption={(option, input) =>
-                input.length > 1 && option.label.toLowerCase().includes(input.toLowerCase())
+                input.length > 0 && option.label.toLowerCase().includes(input.toLowerCase())
               }
             />
             <input className="submit-button" type="submit" value="Submit" disabled={!keepPlaying} />
@@ -360,6 +367,8 @@ const Bandle: React.FC = () => {
           {/* <a href="https://www.youtube.com"><i className="fa fa-youtube-play"></i></a> */}
         </div>
       )}
+
+
       {gamestate && (
         <div className="new-game">
           <button className="play-again-high-score" disabled={keepPlaying} onClick={() => window.location.reload()}>
@@ -375,11 +384,11 @@ const Bandle: React.FC = () => {
   );
 };
 
-// Helper function to format time
-const formatTime = (time: number): string => {
-  const mins = Math.floor(time / 60);
-  const secs = Math.floor(time % 60);
-  return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
-};
+// // Helper function to format time
+// const formatTime = (time: number): string => {
+//   const mins = Math.floor(time / 60);
+//   const secs = Math.floor(time % 60);
+//   return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+// };
 
 export default Bandle;
