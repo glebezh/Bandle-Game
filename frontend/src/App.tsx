@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import Select, { StylesConfig} from "react-select";
+import {BarChart, Bar, XAxis, YAxis, LabelList } from "recharts";
 
-import '../public/songs.txt';
+import "../public/songs.txt";
 
 // Currently available songs (potentially make this a database)
 const directories = ["/levitating", "/espresso", "/blinding lights", "/billie jean", "/shape of you", "/houdini"];
@@ -60,6 +61,54 @@ const Bandle: React.FC = () => {
   }
   localStorage.setItem("Loss", lossVar);
 
+  let one = localStorage.getItem("1");
+  let two = localStorage.getItem("2");
+  let three = localStorage.getItem("3");
+  let four = localStorage.getItem("4");
+  let five = localStorage.getItem("5");
+  let fail = localStorage.getItem("Fail");
+
+
+  if (one === null){
+    one = "0";
+  }
+  localStorage.setItem("1", one);
+
+  if (two === null){
+    two = "0";
+  }
+  localStorage.setItem("2", two);
+
+  if (three === null){
+    three = "0";
+  }
+  localStorage.setItem("3", three);
+
+  if (four === null){
+    four = "0";
+  }
+  localStorage.setItem("4", four);
+
+  if (five === null){
+    five = "0";
+  }
+  localStorage.setItem("5", five);
+
+  if (fail === null){
+    fail = "0";
+  }
+  localStorage.setItem("Fail", fail);
+
+
+  const data = [
+    { category: 1, value: Number(one)},
+    { category: 2, value: Number(two) },
+    { category: 3, value: Number(three)},
+    { category: 4, value: Number(four)},
+    { category: 5, value: Number(five)},
+    { category: "✖", value: Number(fail)},
+  ]
+
 
   // Optional for youtube API integration
   // const [releaseDate, setReleaseDate] = useState<number>();
@@ -91,6 +140,8 @@ const Bandle: React.FC = () => {
     }
   }
   
+  
+
   // Function to compare user input to actual input
   const compareInput = (event: React.FormEvent, index: number) => {
     // Prevent button from refreshing page
@@ -98,7 +149,7 @@ const Bandle: React.FC = () => {
 
     // Perform the comparison and determine gamestate for variables
     if (selectedDirectory2 === chosenSong) {
-      // alert(`Correct! '${selectedDirectory2}'. '${chosenSong}'`);
+      // alert(`Correct! "${selectedDirectory2}". "${chosenSong}"`);
       setGameState("You Won!");
       gamestate = "You Won!"
       const statevar = [...guessState];
@@ -114,12 +165,21 @@ const Bandle: React.FC = () => {
       }
       localStorage.setItem("Win", winNum);
 
+      let guessesnum = localStorage.getItem((guesses+1).toString());
+      if (guessesnum === null) {
+        guessesnum = "1";
+      } 
+      else{
+        guessesnum = (Number(guessesnum) + 1).toString(); 
+      }
+      localStorage.setItem((guesses+1).toString(), guessesnum);
+
       // // localStorage.Win = String(Number(localStorage.Win) + Number(1));
       // setwinCount(winCount => winCount+1);
 
     }
     else if (selectedDirectory2 !== selectedDirectory && index === files.length - 1 && gamestate !== "You Won!") {
-      // alert(`Incorrect! '${selectedDirectory2}'.'${chosenSong}'`);
+      // alert(`Incorrect! "${selectedDirectory2}"."${chosenSong}"`);
       setGameState("You Lost!");
       const statevar = [...guessState];
       statevar[activeIndex] = "❌";
@@ -133,9 +193,20 @@ const Bandle: React.FC = () => {
         lossNum = (Number(lossNum) + 1).toString(); 
       }
       localStorage.setItem("Loss", lossNum);
+
+
+      let guessesfail = localStorage.getItem("Fail");
+      if (guessesfail === null) {
+        guessesfail = "1";
+      } 
+      else{
+        guessesfail = (Number(guessesfail) + 1).toString(); 
+      }
+      localStorage.setItem("Fail", guessesfail);
+
     }
     else if (selectedDirectory2 !== selectedDirectory) {
-      // alert(`Incorrect! '${selectedDirectory2}'.'${chosenSong}'`);
+      // alert(`Incorrect! "${selectedDirectory2}"."${chosenSong}"`);
       const statevar = [...guessState];
       statevar[activeIndex] = "❌";
       setGuessState(statevar);
@@ -253,6 +324,7 @@ const Bandle: React.FC = () => {
     }),
   };
 
+
   return (
     <div>
       <div>
@@ -270,17 +342,20 @@ const Bandle: React.FC = () => {
         {showHighScores && (
         <div style = {{alignContent: "center", textAlign: "center"}}className="modal-overlay" onClick={() => setHighScores(false)}>
           <div style = {{color: isDark ? "white" : "black", background: isDark ? "#222" : "white", alignContent: "center" }} className="modal-box" onClick={(e) => e.stopPropagation()}>
-            <h2 style = {{color: isDark ? "white" : "black"}}>My Scores</h2>
-            <h3 style = {{color: "green"}}>Wins: {winVar}</h3>
-            <h3 style = {{color: "red"}}>Losses: {lossVar}</h3>
+            <h3 style={{fontSize:"25px", marginBottom:"20px"}}>High Scores</h3>
+            <BarChart width={500} height={250} data={data} layout="vertical" barCategoryGap={3}>
+              <YAxis dataKey="category" type="category" width={30} axisLine={false} tickLine={false} tick={{ dx: -10 }} style={{ fontWeight: "bolder", fill: isDark ? "white": "hello!" }}/>
+              <XAxis type="number" hide/>
+              <Bar dataKey="value" fill="#4CAF50" radius={[5, 5, 5, 5]}>
+                <LabelList dataKey="value" position="insideRight" fill="white" fontWeight="bold" dx={-5} formatter={(value: number) => (value > 0 ? value : "")} />
+              </Bar>
+            </BarChart>
             {/* <button onClick={() => setHighScores(false)} className="close">&times; </button> */}
-
-            <button className="play-pause-button" onClick={() => setHighScores(false)}>Ok!</button>
+            <button style= {{marginTop: "20px"}}className="play-pause-button" onClick={() => setHighScores(false)}>Ok!</button>
           </div> 
         </div>
         )}
       
-
         {showInstructions && (
         <div className="modal-overlay" onClick={() => setShowInstructions(false)}>
           <div style = {{color: isDark ? "white" : "black", background: isDark ? "#222" : "white", }} className="modal-box" onClick={(e) => e.stopPropagation()}>
@@ -308,7 +383,7 @@ const Bandle: React.FC = () => {
         {components.map((comp, index) => (
           <div key={comp.id} className={`song-component ${index === activeIndex ? "active" : ""}`}>
             <h3>{comp.type === "other" ? "SYNTH + OTHER" : comp.type.toUpperCase()}</h3>
-            <h3 style={{ opacity: guessState[index] === '⚪' ? 0 : 1 }} className="right-content"> {guessState[index]}</h3>
+            <h3 style={{ opacity: guessState[index] === "⚪" ? 0 : 1 }} className="right-content"> {guessState[index]}</h3>
           </div>
         ))}
       </div>
