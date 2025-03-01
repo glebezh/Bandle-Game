@@ -297,7 +297,7 @@ const Bandle: React.FC = () => {
       ...provided,
       width: "330px",
       "@media (max-width: 768px)": {
-        width: "300px",
+        width: "265px",
       },
       backgroundColor: isDark ? "#222" : "white",
       color: isDark ? "white" : "black",
