@@ -125,7 +125,7 @@ progress {
 }
 
 progress::-webkit-progress-bar {
-  background-color: #f7f5f5;
+  background-color: #eeeded;
   /* background-color: black; */
   border-radius: 10px;
 }

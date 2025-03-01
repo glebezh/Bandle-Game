@@ -139,8 +139,6 @@ const Bandle: React.FC = () => {
       audio.currentTime = 0;
     }
   }
-  
-  
 
   // Function to compare user input to actual input
   const compareInput = (event: React.FormEvent, index: number) => {
@@ -246,20 +244,18 @@ const Bandle: React.FC = () => {
   };
 
   // Effect to fetch song names from txt file and name of song chosen by program
-  useEffect(() => {
-    const fetchFullSongName = async () => {
-      const response = await fetch("/songs.txt");
-      const fileContent = await response.text();
-      const songLines = fileContent.split("\n").map((line) => line.trim()).filter((line) => line !== "");
-      setSongs(songLines);
-      const foundSong = songLines.find((line) =>
-        line.toLowerCase().startsWith(chosenSong.toLowerCase() + " -")
-      );
-      setFinalSong(foundSong ?? "Song not found");
-    };
-    fetchFullSongName();
-  }, []);
-
+  const fetchFullSongName = async () => {
+    const response = await fetch("/songs.txt");
+    const fileContent = await response.text();
+    const songLines = fileContent.split("\n").map((line) => line.trim()).filter((line) => line !== "");
+    setSongs(songLines);
+    const foundSong = songLines.find((line) =>
+      line.toLowerCase().startsWith(chosenSong.toLowerCase() + " -")
+    );
+    setFinalSong(foundSong ?? "Song not found");
+  };
+  fetchFullSongName();
+  
   // Effect to update progress every second
   useEffect(() => {
     setInterval(() => {
@@ -309,10 +305,11 @@ const Bandle: React.FC = () => {
       ...provided,
       backgroundColor: isDark ? "#222" : "white",
     }),
-    option: (provided, { isFocused }) => ({
+    option: (provided, state) => ({
       ...provided,
-      backgroundColor: isFocused ? (isDark ? "#444" : "#eee") : isDark ? "#222" : "white",
-      color: isDark ? "white" : "black",
+      backgroundColor: state.isSelected ? "darkgreen" : "",
+      "&:hover": { backgroundColor: state.isSelected ? "#192E49" : "#88E788;" },
+      cursor: "pointer",
     }),
     singleValue: (provided) => ({
       ...provided,
@@ -376,8 +373,6 @@ const Bandle: React.FC = () => {
           </div>
         </div>
         )}
-
-        
       </div>
       <div className="components-container">
         {components.map((comp, index) => (
@@ -408,7 +403,8 @@ const Bandle: React.FC = () => {
       {!gamestate && (
         <div className="submission-div">
           <form className="form_class" onSubmit={(event) => compareInput(event, activeIndex)}>
-            <Select className = "select_box"
+          <div onFocus={(e) => e.preventDefault()}>
+            <Select
               ref={selectRef}
               options={songs.map((song) => {
                 const actualSongName = song;
@@ -431,6 +427,8 @@ const Bandle: React.FC = () => {
                 input.length > 0 && option.label.toLowerCase().includes(input.toLowerCase())
               }
             />
+            </div>
+
             <input className="submit-button" type="submit" value="Submit" disabled={!keepPlaying} />
           </form>
         </div>
@@ -442,8 +440,6 @@ const Bandle: React.FC = () => {
           {/* <a href="https://www.youtube.com"><i className="fa fa-youtube-play"></i></a> */}
         </div>
       )}
-
-
       {gamestate && (
         <div className="new-game">
           <button className="play-again-high-score" disabled={keepPlaying} onClick={() => window.location.reload()}>
