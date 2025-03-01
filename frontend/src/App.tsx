@@ -317,7 +317,7 @@ const Bandle: React.FC = () => {
       ...provided,
       width: "330px",
       "@media (max-width: 768px)": {
-        width: "250px",
+        width: "230px",
       },
       "@media (max-width: 480px)": {
         width: "100px",
@@ -364,18 +364,18 @@ const Bandle: React.FC = () => {
 
         {showHighScores && (
   <div style={{ alignContent: "center", textAlign: "center" }} className="modal-overlay" onClick={() => setHighScores(false)}>
-    <div style={{ color: isDark ? "white" : "black", background: isDark ? "#222" : "white", alignContent: "center" }} className="modal-box" onClick={(e) => e.stopPropagation()}>
+    <div style={{ width: window.innerWidth > 1024 ? 500: window.innerWidth > 768 ? 350 : window.innerWidth > 480 ? 200 : 150, color: isDark ? "white" : "black", background: isDark ? "#222" : "white", alignContent: "center" }} className="modal-box" onClick={(e) => e.stopPropagation()}>
       <h3 style={{ fontSize: "25px", marginBottom: "20px" }}>High Scores</h3>
 
       {/* Responsive Container */}
       
-      
-
-          <BarChart width={500} height={250} data={data} layout="vertical" barCategoryGap={3}>
+    
+     
+          <BarChart  width={window.innerWidth > 1024 ? 500: window.innerWidth > 768 ? 350 : window.innerWidth > 480 ? 200 : 150} height={250} data={data} layout="vertical" barCategoryGap={3}>
             <YAxis dataKey="category" type="category" width={30} axisLine={false} tickLine={false} tick={{ dx: -10 }} style={{ fontWeight: "bolder", fill: isDark ? "white" : "black" }} />
             <XAxis type="number" hide />
             <Bar dataKey="value" fill="#4CAF50" radius={[5, 5, 5, 5]}>
-              <LabelList dataKey="value" position="insideRight" fill="white" fontWeight="bold" dx={-5} formatter={(value: number) => (value > 0 ? value : "")} />
+              <LabelList dataKey="value" position="insideRight" fill="white" fontWeight="bold" dx={-3} formatter={(value: number) => (value > 0 ? value : "")} />
             </Bar>
           </BarChart>
         

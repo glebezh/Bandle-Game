@@ -138,18 +138,7 @@ select:focus-visible {
   
 }
 
-@media (max-width: 768px) {
-  .modal-box {
-    width: 60%;
-  }
-  
-}
 
-@media (max-width: 480px) {
-  .modal-box {
-    width: 50%;
-  }
-}
 
 
 
