@@ -102,6 +102,16 @@ select:focus-visible {
   }
 }
 
+@media (prefers-color-scheme: dark) {
+  button, input, select {
+    background-color: #222;
+    color:  white;
+  }
+  i{
+    color: white;
+  }
+}
+
 
 
 
