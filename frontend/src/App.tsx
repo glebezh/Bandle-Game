@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Select, { StylesConfig} from "react-select";
-import {BarChart, Bar, XAxis, YAxis, LabelList, ResponsiveContainer } from "recharts";
+import {BarChart, Bar, XAxis, YAxis, LabelList} from "recharts";
 
 // Currently available songs (potentially make this a database)
 const directories = ["/levitating", "/espresso", "/blinding lights", "/billie jean", "/shape of you"];
@@ -311,15 +311,7 @@ const Bandle: React.FC = () => {
     return () => mediaQuery.removeEventListener("change", listener);
   }, []);
 
-  const [chartWidth, setChartWidth] = useState(window.innerWidth);
 
-useEffect(() => {
-  const handleResize = () => setChartWidth(window.innerWidth);
-  
-  window.addEventListener("resize", handleResize);
-  
-  return () => window.removeEventListener("resize", handleResize);
-}, []);
   const customStyles: StylesConfig<{ value: string; label: string }, false> = {
     control: (provided) => ({
       ...provided,
