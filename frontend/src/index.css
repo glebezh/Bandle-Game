@@ -13,6 +13,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -94,8 +95,16 @@ select:focus-visible {
   }
   button, input, select {
     background-color: #ffffff;
+    color:  #213547;
+  }
+  i{
+    color:  #213547;
   }
 }
+
+
+
+
 
 .play-pause-button{
   margin-top: 11px;
@@ -217,6 +226,7 @@ p{
 .submit-button{
   padding-top: 7px;
   margin-left: 7px;
+  
 }
 
 
