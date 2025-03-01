@@ -46,7 +46,7 @@ body {
     /* width: 100%; */
     justify-content: center;
     align-items: center;
-    max-width: 360px;
+    min-width: 330px;
     padding: 3px;
     padding-bottom: 1px;
     border: 1px solid #ccc;
