@@ -271,8 +271,9 @@ const Bandle: React.FC = () => {
     }
   };
   
-  // Call the function
-  fetchFullSongName();
+  useEffect(() => {
+    fetchFullSongName();
+  }, []); //
   
   
   // Effect to update progress every second
@@ -364,14 +365,14 @@ const Bandle: React.FC = () => {
 
         {showHighScores && (
   <div style={{ alignContent: "center", textAlign: "center" }} className="modal-overlay" onClick={() => setHighScores(false)}>
-    <div style={{ width: window.innerWidth > 1024 ? 500: window.innerWidth > 768 ? 350 : window.innerWidth > 480 ? 200 : 150, color: isDark ? "white" : "black", background: isDark ? "#222" : "white", alignContent: "center" }} className="modal-box" onClick={(e) => e.stopPropagation()}>
+    <div style={{ width: window.innerWidth > 1024 ? 500: window.innerWidth > 768 ? 500 : window.innerWidth > 480 ? 450: window.innerWidth > 375 ? 250: 200, color: isDark ? "white" : "black", background: isDark ? "#222" : "white", alignContent: "center" }} className="modal-box" onClick={(e) => e.stopPropagation()}>
       <h3 style={{ fontSize: "25px", marginBottom: "20px" }}>High Scores</h3>
 
       {/* Responsive Container */}
       
     
      
-          <BarChart  width={window.innerWidth > 1024 ? 500: window.innerWidth > 768 ? 350 : window.innerWidth > 480 ? 200 : 150} height={250} data={data} layout="vertical" barCategoryGap={3}>
+          <BarChart  width={window.innerWidth > 1024 ? 500: window.innerWidth > 768 ? 500 : window.innerWidth > 480 ? 450 : window.innerWidth > 375 ? 250: 200} height={250} data={data} layout="vertical" barCategoryGap={3}>
             <YAxis dataKey="category" type="category" width={30} axisLine={false} tickLine={false} tick={{ dx: -10 }} style={{ fontWeight: "bolder", fill: isDark ? "white" : "black" }} />
             <XAxis type="number" hide />
             <Bar dataKey="value" fill="#4CAF50" radius={[5, 5, 5, 5]}>
