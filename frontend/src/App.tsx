@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import Select, { StylesConfig} from "react-select";
-import {BarChart, Bar, XAxis, YAxis, LabelList } from "recharts";
-
-import "../public/songs.txt";
+import {BarChart, Bar, XAxis, YAxis, LabelList, ResponsiveContainer } from "recharts";
 
 // Currently available songs (potentially make this a database)
-const directories = ["/levitating", "/espresso", "/blinding lights", "/billie jean", "/shape of you", "/houdini"];
+const directories = ["/levitating", "/espresso", "/blinding lights", "/billie jean", "/shape of you"];
 const files = ["/drums.mp3", "/bass.mp3", "/guitar.mp3", "/other.mp3", "/vocals.mp3"];
 
 const Bandle: React.FC = () => {
@@ -245,16 +243,37 @@ const Bandle: React.FC = () => {
 
   // Effect to fetch song names from txt file and name of song chosen by program
   const fetchFullSongName = async () => {
-    const response = await fetch("/songs.txt");
-    const fileContent = await response.text();
-    const songLines = fileContent.split("\n").map((line) => line.trim()).filter((line) => line !== "");
-    setSongs(songLines);
-    const foundSong = songLines.find((line) =>
-      line.toLowerCase().startsWith(chosenSong.toLowerCase() + " -")
-    );
-    setFinalSong(foundSong ?? "Song not found");
+    try {
+      const response = await fetch("/songs.txt");
+  
+      if (!response.ok) {
+        throw new Error(`Failed to fetch songs: ${response.status} ${response.statusText}`);
+      }
+  
+      const fileContent = await response.text();
+      const songLines = fileContent
+        .split("\n")
+        .map((line) => line.trim())
+        .filter((line) => line !== "");
+  
+        setSongs((prevSongs) => {
+          return JSON.stringify(prevSongs) === JSON.stringify(songLines) ? prevSongs : songLines;
+        });
+  
+      const foundSong = songLines.find((line) =>
+        line.toLowerCase().startsWith(chosenSong.toLowerCase() + " -")
+      );
+  
+      setFinalSong(foundSong ?? "Song not found");
+    } catch (error) {
+      console.error("Error fetching songs:", error);
+      setFinalSong("Error fetching song list. Please try again later.");
+    }
   };
+  
+  // Call the function
   fetchFullSongName();
+  
   
   // Effect to update progress every second
   useEffect(() => {
@@ -292,12 +311,24 @@ const Bandle: React.FC = () => {
     return () => mediaQuery.removeEventListener("change", listener);
   }, []);
 
+  const [chartWidth, setChartWidth] = useState(window.innerWidth);
+
+useEffect(() => {
+  const handleResize = () => setChartWidth(window.innerWidth);
+  
+  window.addEventListener("resize", handleResize);
+  
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
   const customStyles: StylesConfig<{ value: string; label: string }, false> = {
     control: (provided) => ({
       ...provided,
       width: "330px",
       "@media (max-width: 768px)": {
-        width: "265px",
+        width: "250px",
+      },
+      "@media (max-width: 480px)": {
+        width: "100px",
       },
       backgroundColor: isDark ? "#222" : "white",
       color: isDark ? "white" : "black",
@@ -340,22 +371,29 @@ const Bandle: React.FC = () => {
         {/* <div>Wins: {winVar}  Losses: {lossVar}</div> */}
 
         {showHighScores && (
-        <div style = {{alignContent: "center", textAlign: "center"}}className="modal-overlay" onClick={() => setHighScores(false)}>
-          <div style = {{color: isDark ? "white" : "black", background: isDark ? "#222" : "white", alignContent: "center" }} className="modal-box" onClick={(e) => e.stopPropagation()}>
-            <h3 style={{fontSize:"25px", marginBottom:"20px"}}>High Scores</h3>
-            <BarChart width={500} height={250} data={data} layout="vertical" barCategoryGap={3}>
-              <YAxis dataKey="category" type="category" width={30} axisLine={false} tickLine={false} tick={{ dx: -10 }} style={{ fontWeight: "bolder", fill: isDark ? "white": "hello!" }}/>
-              <XAxis type="number" hide/>
-              <Bar dataKey="value" fill="#4CAF50" radius={[5, 5, 5, 5]}>
-                <LabelList dataKey="value" position="insideRight" fill="white" fontWeight="bold" dx={-5} formatter={(value: number) => (value > 0 ? value : "")} />
-              </Bar>
-            </BarChart>
-            {/* <button onClick={() => setHighScores(false)} className="close">&times; </button> */}
-            <button style= {{marginTop: "20px"}}className="play-pause-button" onClick={() => setHighScores(false)}>Ok!</button>
-          </div> 
-        </div>
-        )}
+  <div style={{ alignContent: "center", textAlign: "center" }} className="modal-overlay" onClick={() => setHighScores(false)}>
+    <div style={{ color: isDark ? "white" : "black", background: isDark ? "#222" : "white", alignContent: "center" }} className="modal-box" onClick={(e) => e.stopPropagation()}>
+      <h3 style={{ fontSize: "25px", marginBottom: "20px" }}>High Scores</h3>
+
+      {/* Responsive Container */}
       
+      
+
+          <BarChart width={500} height={250} data={data} layout="vertical" barCategoryGap={3}>
+            <YAxis dataKey="category" type="category" width={30} axisLine={false} tickLine={false} tick={{ dx: -10 }} style={{ fontWeight: "bolder", fill: isDark ? "white" : "black" }} />
+            <XAxis type="number" hide />
+            <Bar dataKey="value" fill="#4CAF50" radius={[5, 5, 5, 5]}>
+              <LabelList dataKey="value" position="insideRight" fill="white" fontWeight="bold" dx={-5} formatter={(value: number) => (value > 0 ? value : "")} />
+            </Bar>
+          </BarChart>
+        
+     
+
+      <button style={{ marginTop: "20px" }} className="play-pause-button" onClick={() => setHighScores(false)}>Ok!</button>
+    </div>
+  </div>
+)}
+
         {showInstructions && (
         <div className="modal-overlay" onClick={() => setShowInstructions(false)}>
           <div style = {{color: isDark ? "white" : "black", background: isDark ? "#222" : "white", }} className="modal-box" onClick={(e) => e.stopPropagation()}>
