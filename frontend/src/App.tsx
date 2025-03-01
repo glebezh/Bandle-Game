@@ -296,10 +296,9 @@ const Bandle: React.FC = () => {
     control: (provided) => ({
       ...provided,
       width: "330px",
-      "@media (max-width: 768px)": {  // Mobile view
-    width: "100%",  // Full width on mobile screens
-    maxWidth: "300px",  // Optional: Maximum width to ensure it doesn't stretch too far
-  },
+      "@media (max-width: 768px)": {
+        width: "300px",
+      },
       backgroundColor: isDark ? "#222" : "white",
       color: isDark ? "white" : "black",
       borderColor: isDark ? "#444" : "#ccc",
