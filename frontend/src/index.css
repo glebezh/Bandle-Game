@@ -123,23 +123,7 @@ select:focus-visible {
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  button, input, select {
-    background-color: #222;
-    color:  white;
-  }
-  i{
-    color: white;
-  }
-  progress::-webkit-progress-bar {
-    background-color: #323332;
-    /* background-color: black; */
-  }
-  progress{
-    background-color: #323332;
-  }
-  
-}
+
 
 
 
@@ -356,4 +340,22 @@ p{
   float: top;
   font-size: 28px;
   font-weight: bold;
+}
+
+@media (prefers-color-scheme: dark) {
+  button, input, select {
+    background-color: #222;
+    color:  white;
+  }
+  i{
+    color: white;
+  }
+  progress::-webkit-progress-bar {
+    background-color: #323332;
+    /* background-color: black; */
+  }
+  progress{
+    background-color: #323332;
+  }
+  
 }
