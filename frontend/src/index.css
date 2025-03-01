@@ -34,7 +34,7 @@ body {
 @media (max-width: 768px) {
   body {
     overflow: auto;
-    width: 100%;
+    width: 90%;
     height: 100vh;
   }
 }
