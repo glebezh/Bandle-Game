@@ -42,6 +42,5 @@ https://github.com/user-attachments/assets/b383fab5-9e6b-43b4-8731-72c66c4bdb2c
 
 
 ## Current future plans
-- High Scores (setting up backend to accomodate for this)
 - Youtube API to scrape data and provide hints to user (similar to actual Bandle site)
 - Allow user to add their own song and the app would process it and then allow them to play an instance with the song being their game?
