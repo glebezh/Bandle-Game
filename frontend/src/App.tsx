@@ -3,7 +3,7 @@ import Select, { StylesConfig} from "react-select";
 import {BarChart, Bar, XAxis, YAxis, LabelList} from "recharts";
 
 // Currently available songs (potentially make this a database)
-const directories = ["/ymca", "/uptown funk", "/toxic", ];
+const directories = ["/ymca", "/uptown funk", "/toxic", "/billie jean", "/blinding lights", "/espresso", "/get lucky", "/houdini", "/levitating", "/poker face", "/shape of you" ];
 const files = ["/drums.mp3", "/bass.mp3", "/guitar.mp3", "/other.mp3", "/vocals.mp3"];
 
 const Bandle: React.FC = () => {
