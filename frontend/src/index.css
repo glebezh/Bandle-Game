@@ -455,6 +455,9 @@ p{
   i{
     color: white;
   }
+  ✖{
+    color: white;
+  }
   progress::-webkit-progress-bar {
     background-color: #323332;
     /* background-color: black; */
