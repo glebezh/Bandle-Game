@@ -104,7 +104,7 @@ const Bandle: React.FC = () => {
     { category: 3, value: Number(three)},
     { category: 4, value: Number(four)},
     { category: 5, value: Number(five)},
-    { category: "✖", value: Number(fail), color: isDark ? "white" : "white"}
+    { category: "✖\uFE0E", value: Number(fail)}
   ]
 
 
