@@ -368,12 +368,7 @@ const Bandle: React.FC = () => {
             <div style={{ width: window.innerWidth > 1024 ? 500: window.innerWidth > 768 ? 500 : window.innerWidth > 480 ? 450: window.innerWidth > 375 ? 350: 350, color: isDark ? "white" : "black", background: isDark ? "#222" : "white", alignContent: "center" }} className="modal-box" onClick={(e) => e.stopPropagation()}>
               <h3 style={{ fontSize: "25px", marginBottom: "20px" }}>High Scores</h3>
                   <BarChart  width={window.innerWidth > 1024 ? 500: window.innerWidth > 768 ? 500 : window.innerWidth > 480 ? 450 : window.innerWidth > 375 ? 350: 350} height={250} data={data} layout="vertical" barCategoryGap={3}>
-                    <YAxis dataKey="category" type="category" width={30} axisLine={false} tickLine={false} tick={{
-    dx: -10,
-    fill: isDark ? "white" : "black",
-    fontWeight: "bold",
-    fontFamily: "Arial, sans-serif"
-  }} />
+                    <YAxis dataKey="category" type="category" width={30} axisLine={false} tickLine={false} tick={{dx: -10, fill: isDark ? "white" : "black", fontWeight: "bold"}} />
                     <XAxis type="number" hide />
                     <Bar dataKey="value" fill="#4CAF50" radius={[5, 5, 5, 5]}>
                       <LabelList dataKey="value" position="insideRight" fill="white" fontWeight="bold" dx={-3} formatter={(value: number) => (value > 0 ? value : "")} />
