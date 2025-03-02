@@ -469,3 +469,8 @@ p{
   }
   
 }
+@media (prefers-color-scheme: dark) {
+  .chart-label-x {
+    color: white !important;
+  }
+}
